@@ -5,9 +5,12 @@
  * Date: 7/14/2016
  * Time: 8:14 PM
  */
-namespace app\src;
+namespace Src\Model;
 
-class User
+use Src\Core\Model as Model;
+
+class User extends Model
 {
 	public $tableName = 'User';
+
 }

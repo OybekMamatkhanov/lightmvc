@@ -2,10 +2,10 @@
 /**
  * Created by PhpStorm.
  * User: John
- * Date: 7/15/2016
+ * Date: 7/14/2016
  * Time: 11:43 AM
  */
-/*class Autoloader
+class Autoloader
 {
 	protected $namespaces = array();
 
@@ -39,4 +39,4 @@
 		}
 		return false;
 	}
-}*/
+}

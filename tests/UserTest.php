@@ -6,7 +6,12 @@
  * Date: 7/14/2016
  * Time: 8:15 PM
  */
-class Test extends PHPUnit_Framework_TestCase
-{
+use Src\Model\User;
 
+class UserTest extends PHPUnit_Framework_TestCase
+{
+	public function testTableExist()
+	{
+
+	}
 }

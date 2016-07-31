@@ -1,0 +1,22 @@
+{
+    "name": "dev/user-test",
+    "description": "User search test",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "oybek-tashkent",
+            "email": "test@mail.com"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/config/database.php"
+        ],
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "require": {
+        "phpunit/phpunit": "5.4.*"
+    }
+}

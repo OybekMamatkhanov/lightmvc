@@ -2,17 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: John
- * Date: 7/15/2016
+ * Date: 7/14/2016
  * Time: 2:20 PM
  */
-namespace Core;
+namespace Src\Core;
 
 class Route
 {
 	static function handle()
 	{
 		// контроллер и действие по умолчанию
-		$controllerName = 'Main';
+		$controllerName = 'Site';
 		$actionName = 'index';
 
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
@@ -31,57 +31,45 @@ class Route
 
 		// добавляем префиксы
 		$modelName = ucfirst($controllerName);
-		$controllerName = 'Controller'.ucfirst($controllerName);
+		$controllerName = ucfirst($controllerName).'Controller';
 		$actionName = 'action'.ucfirst($actionName);
 
 		// подцепляем файл с классом модели (файла модели может и не быть)
 
 		$modelFile = ucfirst($modelName).'.php';
-		$modelPath = "src/Models/".$modelFile;
-		if(file_exists($modelPath))
-		{
-			include "src/Models/" . $modelFile;
-		}
+		$modelPath = "src/Model/".$modelFile;
+		try {
+			if (file_exists($modelPath)) {
+				include "src/Model/" . $modelFile;
+			}
 
-		// подцепляем файл с классом контроллера
-		$controllerFile = strtolower($controllerName).'.php';
-		$controllerPath = "src/Controllers/" . $controllerFile;
-		if(file_exists($controllerPath))
-		{
-			include "application/controllers/".$controller_file;
-		}
-		else
-		{
-			/*
-			правильно было бы кинуть здесь исключение,
-			но для упрощения сразу сделаем редирект на страницу 404
-			*/
-			Route::ErrorPage404();
-		}
+			// подцепляем файл с классом контроллера
+			$controllerFile = ucfirst($controllerName) . '.php';
+			$controllerPath = "src/Controller/" . $controllerFile;
+			if (file_exists($controllerPath)) {
+				include "src/Controller/" . $controllerFile;
+			}
+		} catch (\Exception $e){
 
+			echo $e->getMessage();
+
+		}
+		//var_dump($controllerName);
 		// создаем контроллер
-		$controller = new $controller_name;
-		$action = $action_name;
+		$controller = new $controllerName;
+		$action = $actionName;
+		try {
+			if(method_exists($controller, $action))
+			{
+				// вызываем действие контроллера
+				$controller->$action();
+			}
+		} catch (\Exception $e){
 
-		if(method_exists($controller, $action))
-		{
-			// вызываем действие контроллера
-			$controller->$action();
+			echo $e->getMessage();
+
 		}
-		else
-		{
-			// здесь также разумнее было бы кинуть исключение
-			Route::ErrorPage404();
-		}
+
 
 	}
-
-	function ErrorPage404()
-	{
-		$host = 'http://'.$_SERVER['HTTP_HOST'].'/';
-		header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		header('Location:'.$host.'404');
-	}
-
 }
