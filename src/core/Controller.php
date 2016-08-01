@@ -7,13 +7,45 @@
  */
 namespace Src\Core;
 
+use Src\Core\App;
+
 class Controller
 {
-	public $model;
 	public $view;
 
-	public function __construct()
+	protected $data;
+	protected $model;
+	protected $params;
+
+
+	public function __construct($data = array())
 	{
 		$this->view = new View();
+		$this->data = $data;
+		$this->params = App::getRouter()->getParams();
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getData()
+	{
+		return $this->data;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getModel()
+	{
+		return $this->model;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getParams()
+	{
+		return $this->params;
 	}
 }

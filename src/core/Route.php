@@ -7,69 +7,91 @@
  */
 namespace Src\Core;
 
-class Route
+use Src\Core\Config;
+use Src\Core\Contracts\RouterInterface;
+
+class Route implements RouterInterface
 {
-	static function handle()
+
+	protected $uri;
+
+	protected $controller = 'Site';
+
+	protected $action = 'index';
+
+	protected $language;
+
+	public $route;
+
+	protected $params;
+
+	/**
+	 * @return mixed
+	 */
+
+	public function getUri()
 	{
-		// контроллер и действие по умолчанию
-		$controllerName = 'Site';
-		$actionName = 'index';
-
-		$routes = explode('/', $_SERVER['REQUEST_URI']);
-
-		// получаем имя контроллера
-		if ( !empty($routes[1]) )
-		{
-			$controllerName = $routes[1];
-		}
-
-		// получаем имя экшена
-		if ( !empty($routes[2]) )
-		{
-			$actionName = $routes[2];
-		}
-
-		// добавляем префиксы
-		$modelName = ucfirst($controllerName);
-		$controllerName = ucfirst($controllerName).'Controller';
-		$actionName = 'action'.ucfirst($actionName);
-
-		// подцепляем файл с классом модели (файла модели может и не быть)
-
-		$modelFile = ucfirst($modelName).'.php';
-		$modelPath = "src/Model/".$modelFile;
-		try {
-			if (file_exists($modelPath)) {
-				include "src/Model/" . $modelFile;
-			}
-
-			// подцепляем файл с классом контроллера
-			$controllerFile = ucfirst($controllerName) . '.php';
-			$controllerPath = "src/Controller/" . $controllerFile;
-			if (file_exists($controllerPath)) {
-				include "src/Controller/" . $controllerFile;
-			}
-		} catch (\Exception $e){
-
-			echo $e->getMessage();
-
-		}
-		//var_dump($controllerName);
-		// создаем контроллер
-		$controller = new $controllerName;
-		$action = $actionName;
-		try {
-			if(method_exists($controller, $action))
-			{
-				// вызываем действие контроллера
-				$controller->$action();
-			}
-		} catch (\Exception $e){
-
-			echo $e->getMessage();
-
-		}
-
-
+		return $this->uri;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getController()
+	{
+		return $this->controller;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getAction()
+	{
+		return $this->action;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getParams()
+	{
+		return $this->params;
+	}
+
+	/**
+	 * Route constructor.
+	 * @param uri
+	 */
+	public function __construct($uri)
+	{
+		$this->uri = urldecode(trim($uri, '/'));
+		$this->language = Config::getSettings('lang');
+
+		$routes = explode('?', $this->uri);
+
+		$path = $routes[0];
+
+		$pathParts = explode('/', $path);
+
+		if ( count($pathParts) ) {
+
+			if ( in_array(strtolower(current($pathParts)), array('language' => Config::getSettings('lang'))) ) {
+				$this->language = strtolower(current($pathParts));
+				array_shift($pathParts);
+			}
+
+			if ( current($pathParts) ) {
+				$this->controller = strtolower(current($pathParts));
+				array_shift($pathParts);
+		}
+
+			if ( current($pathParts) ) {
+				$this->action = strtolower(current($pathParts));
+				array_shift($pathParts);
+			}
+
+			$this->params = $pathParts;
+		}
+	}
+
 }

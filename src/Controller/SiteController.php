@@ -16,7 +16,7 @@ class SiteController extends Controller
 		$this->view->render('main', 'index');
 	}
 
-	public function actionSignIn()
+	public function actionSignin()
 	{
 		$this->view->render('main', 'login');
 	}
