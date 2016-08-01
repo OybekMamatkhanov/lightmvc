@@ -51,11 +51,6 @@ class App
 
 		}
 
-
-		var_dump('Controller :' . $controllerClass);
-		var_dump('Action :' . $actionMethod);
-
-
 		$controller = new $controllerClass();
 
 		try {
