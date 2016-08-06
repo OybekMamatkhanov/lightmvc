@@ -13,5 +13,6 @@ interface RouterInterface {
 	public function getAction();
 	public function getController();
 	public function getUri();
+	public function getLanguage();
 
 }

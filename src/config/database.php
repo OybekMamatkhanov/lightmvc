@@ -6,7 +6,7 @@
  * Time: 5:36 PM
  */
 return array(
-		'connectionString'=>'mysql:host=localhost;dbname=db_test',
+		'connectionString'=>'mysql:host=localhost;dbname=testdb',
 		'username'=>'homestead',
 		'password'=>'secret',
 		'charset'=>'utf8',

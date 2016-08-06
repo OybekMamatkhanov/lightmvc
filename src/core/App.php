@@ -10,11 +10,14 @@ namespace Src\Core;
 
 use Src\Core\Contracts\RouterInterface;
 use Src\Core\Controller;
+use Src\Core\DB;
 
 class App
 {
 
 	protected static $router;
+
+	public static $db;
 
 	/**
 	 * @return mixed
@@ -27,6 +30,10 @@ class App
 	public static function run(RouterInterface $router)
 	{
 		self::$router = $router;
+
+		self::$db =  DB::getConnection();
+
+		Language::load(self::$router->getLanguage());
 
 		$controllerClass = ucfirst(self::$router->getController()) . 'Controller';
 		$actionMethod = 'action' . ucfirst(self::$router->getAction());

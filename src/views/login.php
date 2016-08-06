@@ -5,20 +5,22 @@
  * Date: 7/30/2016
  * Time: 3:42 AM
  */
+use Src\Core\Language;
 ?>
 
-<div class="conteiner">
-	<form action="/sign" method="post" class="form-signin">
-		<h2 class="form-signin-heading">Please sign in</h2>
-		<label for="inputEmail" class="sr-only">Email address</label>
-		<input type="email" id="inputEmail" class="form-control" placeholder="e-mail/username" required="" autofocus="">
+<div class="container">
+	<form action="/user/login" method="post" class="form-signin">
+		<h1></h1>
+		<h2 class="form-signin-heading"><?=Language::get('login')?></h2>
+		<label for="inputEmail" class="sr-only"><?=Language::get('email')?></label>
+		<input type="email" id="inputEmail" class="form-control" placeholder="<?=Language::get('email')?>" required="" autofocus="" name="email">
 		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="inputPassword" class="form-control" placeholder="password" required="">
+		<input type="password" id="inputPassword" class="form-control" placeholder="<?=Language::get('password')?>" required="" name="password">
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" value="remember-me"> Remember me
+				<input type="checkbox" value="remember-me" name="remember"><?=Language::get('remember')?>
 			</label>
 		</div>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit"><?=Language::get('login')?></button>
 	</form>
 </div>

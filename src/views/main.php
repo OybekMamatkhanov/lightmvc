@@ -5,6 +5,8 @@
  * Date: 7/14/2016
  * Time: 8:00 PM
  */
+use Src\Core\Language;
+use Src\Core\Session;
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +21,27 @@
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Project name</a>
+			<a class="navbar-brand" href="#"><?=Language::get('home')?></a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/site/signin">Log In</a></li>
-				<li><a href="/site/signup">Sign Up</a></li>
+				<?php if ( !Session::get('username') ) :?>
+					<li><a href="/site/signin"><?=Language::get('login')?></a></li>
+					<li><a href="/site/signup"><?=Language::get('signup')?></a></li>
+				<?php elseif ( Session::get('username') ) : ?>
+					<li><a href="/user/logout"><?=Language::get('logout')?></a></li>
+				<?php endif; ?>
 			</ul>
 		</div>
+
+		<!--<div class="test">
+
+			<?php if (Session::hasFlash() ) :?>
+				<div class="alert alert-info" role="alert">
+					<?php Session::flash(); ?>
+				</div>
+			<?php endif; ?>
+		</div>-->
 	</div>
 </nav>
 <?php include 'src/views/'.$view . '.php'; ?>

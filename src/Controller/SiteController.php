@@ -8,11 +8,14 @@
 
 
 use Src\Core\Controller;
+use Src\Model\User;
 
 class SiteController extends Controller
 {
+
 	public function actionIndex()
 	{
+
 		$this->view->render('main', 'index');
 	}
 

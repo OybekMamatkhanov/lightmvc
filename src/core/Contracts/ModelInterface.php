@@ -8,7 +8,5 @@
 namespace Src\Core\Contracts;
 
 interface ModelInterface {
-
-	public static function dbConnect();
-	public static function loadConfig($config);
+	public function __construct();
 }

@@ -6,48 +6,41 @@
  * Time: 7:07 PM
  */
 namespace  Src\Core;
+
+
 use Src\Core\Contracts\ModelInterface;
 
 abstract class Model implements ModelInterface
 {
 	protected $tableName = '';
 
-	protected static $config;
-	protected static $db;
-	public $errorCode;
+	protected $db;
+
 
 	public function __construct()
 	{
-
-		$this->dbConnect();
-
+		//TODO
+		$this->db = App::$db;
 	}
 
-	public static function loadConfig($config)
+	public function save()
 	{
-		self::$config = $config;
+		//TODO
 	}
 
-	public static function dbConnect()
+	public function getLastId()
 	{
+		//TODO
+	}
 
-		$dbOptions = array(
-			\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . self::$config['database']['charset'] . '',
-			\PDO::ATTR_PERSISTENT => true);
+	protected function update()
+	{
+		//TODO
+	}
 
-		try {
-			self::$db = new \PDO(
-				self::$config['database']['connectionString'],
-				self::$config['database']['username'],
-				self::$config['database']['password'],
-				$dbOptions
-			);
-		}
-		catch(\PDOException $e) {
-			echo $e->getMessage();
-		}
-
-		return self::$db;
+	protected function create()
+	{
+		//TODO
 	}
 
 }

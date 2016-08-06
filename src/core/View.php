@@ -9,6 +9,11 @@ namespace Src\Core;
 
 class View
 {
+	protected $data;
+
+	protected $path;
+
+
 	public function render($template, $view, $model = null)
 	{
 		include 'src/views/'. $template. '.php';

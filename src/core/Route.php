@@ -25,6 +25,8 @@ class Route implements RouterInterface
 
 	protected $params;
 
+	protected $prefix;
+
 	/**
 	 * @return mixed
 	 */
@@ -59,23 +61,43 @@ class Route implements RouterInterface
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+
+	public function getRoute()
+	{
+		return $this->route;
+	}
+
+	/**
 	 * Route constructor.
 	 * @param uri
 	 */
 	public function __construct($uri)
 	{
 		$this->uri = urldecode(trim($uri, '/'));
-		$this->language = Config::getSettings('lang');
+		$this->language = 'en';
+		$this->route = 'default';
+		$routes = array( 'default' => '', 'profile' => 'user' );
 
-		$routes = explode('?', $this->uri);
+		$uri = explode('?', $this->uri);
 
-		$path = $routes[0];
+		$path = $uri[0];
 
 		$pathParts = explode('/', $path);
 
 		if ( count($pathParts) ) {
 
-			if ( in_array(strtolower(current($pathParts)), array('language' => Config::getSettings('lang'))) ) {
+			if ( in_array(strtolower(current($pathParts)), array_keys($routes)) ) {
+				$this->route = strtolower(current($pathParts));
+				$this->prefix =  isset($routes[$this->route]) ? $routes[$this->route] : '';
+				$this->language = strtolower(current($pathParts));
+				array_shift($pathParts);
+			} else if ( in_array(strtolower(current($pathParts)), Config::getSettings('lang')) ) {
 				$this->language = strtolower(current($pathParts));
 				array_shift($pathParts);
 			}
@@ -92,6 +114,12 @@ class Route implements RouterInterface
 
 			$this->params = $pathParts;
 		}
+	}
+
+	public static function redirect($uri)
+	{
+		header("Location: ".$uri);
+		exit();
 	}
 
 }
