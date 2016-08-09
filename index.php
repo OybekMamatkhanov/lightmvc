@@ -21,7 +21,6 @@ $config = __DIR__.'/src/config/database.php';
 Model::loadConfig(require_once($config));
 */
 session_start();
-Session::setFlash('Test');
 
 $route = new Route($_SERVER['REQUEST_URI']);
 App::run($route);

@@ -9,6 +9,7 @@
 namespace Src\Core;
 
 use Src\Core\Session;
+use Src\Core\ImageResize;
 
 class Upload
 {

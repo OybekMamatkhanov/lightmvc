@@ -10,5 +10,4 @@ return array(
 		'username'=>'homestead',
 		'password'=>'secret',
 		'charset'=>'utf8',
-		'userTable'=>'users',
 );

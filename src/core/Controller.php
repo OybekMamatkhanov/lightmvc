@@ -21,7 +21,7 @@ class Controller
 	public function __construct($data = array())
 	{
 		$this->view = new View();
-		$this->data = $data;
+		$this->model = $data;
 		$this->params = App::getRouter()->getParams();
 	}
 

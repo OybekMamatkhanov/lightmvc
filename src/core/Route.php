@@ -21,7 +21,7 @@ class Route implements RouterInterface
 
 	protected $language;
 
-	public $route;
+	protected $route;
 
 	protected $params;
 
@@ -114,6 +114,7 @@ class Route implements RouterInterface
 
 			$this->params = $pathParts;
 		}
+
 	}
 
 	public static function redirect($uri)

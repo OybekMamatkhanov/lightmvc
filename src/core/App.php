@@ -35,8 +35,14 @@ class App
 
 		Language::load(self::$router->getLanguage());
 
+		$route = self::$router->getUri();
+
 		$controllerClass = ucfirst(self::$router->getController()) . 'Controller';
 		$actionMethod = 'action' . ucfirst(self::$router->getAction());
+
+		if( $route == 'site/admin' && Session::get('role') != 1 ) {
+			Route::redirect('/site/signin');
+		}
 
 		$modelFile = ucfirst($controllerClass).'.php';
 		$modelPath = "src/Model/".$modelFile;

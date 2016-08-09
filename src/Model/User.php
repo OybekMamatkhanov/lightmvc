@@ -21,27 +21,19 @@ class User extends Model
 
 	public function getUser($data = array())
 	{
-		var_dump($_POST);
-		$password = md5($data['password'].Config::getSettings('salt'));
-
-		$sql = "SELECT username, email, password, image
-					FROM `users`
-						WHERE email = :email
-							AND password = :password";
+		$sql = "SELECT username, email, password, image, role
+					FROM `user_test`
+						WHERE email = :email";
 
 		$handler = $this->db->prepare($sql);
 
 		$handler->bindValue(':email', $data['email'], \PDO::PARAM_STR);
-		$handler->bindValue(':password', $password, \PDO::PARAM_STR);
-
 
 		$handler->execute();
 
 		$result = $handler->fetch(\PDO::FETCH_ASSOC);
 
 		return $result;
-
-
 	}
 
 	public function save($data = array())
@@ -49,7 +41,7 @@ class User extends Model
 
 		$password = md5($data['password'].Config::getSettings('salt'));
 		$sql = "INSERT INTO
-					users(`username`, `email`, `password`, `image`)
+					user_test(`username`, `email`, `password`, `image`)
 					VALUES
 						(:username, :email, :password, :image)";
 
@@ -60,12 +52,7 @@ class User extends Model
 		$handler->bindValue(':password', $password, \PDO::PARAM_STR);
 		$handler->bindValue(':image', $this->image, \PDO::PARAM_STR);
 
-
-		var_dump($sql);
-		var_dump($handler);
-		var_dump($handler->execute());
-		var_dump($handler->errorInfo());
-		exit;
+		$handler->execute();
 	}
 
 }
