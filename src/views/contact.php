@@ -65,11 +65,13 @@
 
 				<div class="col-lg-6">
 					<div class="form-group">
+					<?php if ( isset($model['error']) ):?>
 						<?php if ( $model['error'] == 'Success' ):?>
 							<div class="alert alert-success"><strong><span class="glyphicon glyphicon-send"></span> Success! Message sent.</strong></div>
 						<?php else:?>
 							<div class="alert alert-danger"><span class="glyphicon glyphicon-alert"></span><strong> Error! Please check the inputs <?php echo $model['error']?>. </strong></div>
 						<?php endif;?>
+					<?php endif;?>
 					</div>
 					<div class="form-group">
 						<label for="InputIMage">Your Photo</label>
@@ -78,12 +80,6 @@
 							<span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
 					</div>
 					<div class="form-group">
-							<?php if ( isset($model->errors) ) :?>
-								<div class="alert alert-danger">
-									<?php ?>
-								</div>
-							<?php endif;?>
-
 						<label for="InputName">Your Name</label>
 						<div class="input-group">
 							<input type="text" class="form-control" name="name" id="InputName" placeholder="Enter Name" required>
